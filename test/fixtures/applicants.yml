@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  serial_no: 1
+  category: MyString
+  location: MyString
+  programme: MyString
+  college: MyString
+  branch: MyString
+  graduation_year: MyString
+  name: MyString
+  batch: MyString
+  whatsapp_number: MyString
+  inheritance: MyString
+  a2j_id: MyString
+  mail_id: MyString
+  jlpt_level: MyString
+  whatsapp: MyString
+  amount: 9.99
+  balance: 9.99
+  admission_date: 2025-01-23
+  admission_done_by: MyString
+  balance_reminder: MyString
+  recipt_no: MyString
+  payment_mode: MyString
+  remarks: MyText
+
+two:
+  serial_no: 1
+  category: MyString
+  location: MyString
+  programme: MyString
+  college: MyString
+  branch: MyString
+  graduation_year: MyString
+  name: MyString
+  batch: MyString
+  whatsapp_number: MyString
+  inheritance: MyString
+  a2j_id: MyString
+  mail_id: MyString
+  jlpt_level: MyString
+  whatsapp: MyString
+  amount: 9.99
+  balance: 9.99
+  admission_date: 2025-01-23
+  admission_done_by: MyString
+  balance_reminder: MyString
+  recipt_no: MyString
+  payment_mode: MyString
+  remarks: MyText
