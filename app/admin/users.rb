@@ -30,14 +30,5 @@ ActiveAdmin.register User do
     end
     f.actions
   end
-  action_item :send_password_reset, only: :show do
-    link_to 'Send Password Reset', send_password_reset_admin_user_path(user), method: :post
-  end
-
-  member_action :send_password_reset, method: :post do
-    user = User.find(params[:id])
-    UserMailer.password_reset(user).deliver_now
-    redirect_to admin_user_path(user), notice: "Password reset email sent."
-  end
 
 end
