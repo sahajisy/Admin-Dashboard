@@ -12,15 +12,41 @@ ActiveAdmin.register Applicant do
       end
     end
 
+    def payment_histories_params
+      params[:applicant][:payment_histories_attributes] || []
+    end
+
     def update
       @applicant = Applicant.find(params[:id])
       @applicant.admission_done_by = current_user.username
-      if @applicant.update(permitted_params[:applicant])
+
+      payment_histories_params = params[:applicant][:payment_histories_attributes] || []
+      payment_histories_params.each do |index, attributes|
+        if attributes[:id].blank?
+          @applicant.payment_histories.build(attributes.permit(:payable_amount, :paid_amount, :payment_date, :updated_by).merge(updated_by: current_user.username))
+        else
+          payment_history = @applicant.payment_histories.find(attributes[:id])
+          payment_history.update(attributes.permit(:payable_amount, :paid_amount, :payment_date, :updated_by).merge(updated_by: current_user.username)) unless payment_history.nil?
+        end
+      end
+
+      if @applicant.update(permitted_params[:applicant].except(:payment_histories_attributes))
         redirect_to admin_applicant_path(@applicant), notice: 'Applicant was successfully updated.'
       else
         render :edit
       end
     end
+
+    def new
+      @applicant = Applicant.new
+      @applicant.payment_histories.build
+    end
+
+    def edit
+      @applicant = Applicant.find(params[:id])
+      @applicant.payment_histories.build if @applicant.payment_histories.empty?
+    end
+
   end
 
   form do |f|
@@ -39,8 +65,8 @@ ActiveAdmin.register Applicant do
       f.input :mail_id
       f.input :jlpt_level, as: :select, collection: ['N5', 'N4', 'N3', 'N2']
       f.input :whatsapp, as: :select, collection: ["Yes", "No"]
-      f.input :amount
-      f.input :balance, input_html: { id: 'balance_input' }
+      #f.input :amount
+      #f.input :balance, input_html: { id: 'balance_input' }
       f.input :admission_date, as: :datepicker
       f.input :balance_reminder, as: :select, collection: ["Yes-Reminder 1", "Yes-Reminder 2", "Yes-Reminder 3","Removed","No"]
       f.input :recipt_no
@@ -48,27 +74,24 @@ ActiveAdmin.register Applicant do
       f.input :remarks
     end
 
-    f.has_many :payment_histories, allow_destroy: true, new_record: true do |pf|
-      pf.input :payable_amount
-      pf.input :paid_amount
-      pf.input :payment_date, as: :datepicker
-      pf.input :updated_by
+    if f.object.new_record?
+      f.has_many :payment_histories, allow_destroy: true, new_record: true do |pf|
+        pf.input :payable_amount
+        pf.input :paid_amount
+        pf.input :payment_date, as: :datepicker
+        pf.input :updated_by
+      end
+    else
+      f.has_many :payment_histories, allow_destroy: true, new_record: true do |pf|
+        pf.input :paid_amount
+        pf.input :payment_date, as: :datepicker
+        #pf.input :updated_by
+      end
     end
 
     f.actions
   end
 
-  controller do
-    def new
-      @applicant = Applicant.new
-      @applicant.payment_histories.build
-    end
-
-    def edit
-      @applicant = Applicant.find(params[:id])
-      @applicant.payment_histories.build if @applicant.payment_histories.empty?
-    end
-  end
 
   show do
     attributes_table do

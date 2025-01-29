@@ -2,6 +2,8 @@ class Applicant < ApplicationRecord
   has_many :payment_histories, dependent: :destroy
   accepts_nested_attributes_for :payment_histories, allow_destroy: true
 
+  before_save :set_amount_based_on_jlpt_level
+
   validates :whatsapp_number, presence: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
 
   # Specify searchable attributes
