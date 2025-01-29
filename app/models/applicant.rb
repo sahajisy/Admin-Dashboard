@@ -5,6 +5,7 @@ class Applicant < ApplicationRecord
   before_save :set_amount_based_on_jlpt_level
 
   validates :whatsapp_number, presence: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
+  validates :mail_id, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
 
   # Specify searchable attributes
   def self.ransackable_attributes(auth_object = nil)
@@ -19,6 +20,10 @@ class Applicant < ApplicationRecord
     ["payment_histories"] # List only associations here
   end
 
+  def latest_balance
+    payment_histories.order(payment_date: :desc).first&.balance
+  end
+
   before_save :set_amount_based_on_jlpt_level
 
   def set_amount_based_on_jlpt_level
@@ -29,7 +34,7 @@ class Applicant < ApplicationRecord
       self.amount = 12000
     when 'N3'
       self.amount = 13000
-    when 'N4'
+    when 'N2'
       self.amount = 14000
     else
       self.amount = 0

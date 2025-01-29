@@ -49,6 +49,36 @@ ActiveAdmin.register Applicant do
 
   end
 
+index do
+    selectable_column
+    id_column
+      column :category
+      column :location
+      column :programme
+      column :college
+      column :branch
+      column :graduation_year
+      column :name
+      column :batch
+      column :whatsapp_number
+      column :inheritance
+      column :a2j_id
+      column :mail_id
+      column :jlpt_level
+      column :whatsapp
+      column :amount
+      column :balance do |applicant|
+        applicant.latest_balance
+      end
+      column :admission_date
+      column :admission_done_by
+      column :balance_reminder
+      column :recipt_no
+      column :payment_mode
+      column :remarks
+      actions
+    end
+
   form do |f|
     f.inputs do
       f.input :category, as: :select, collection: ["Student", "Working Professional"]
@@ -79,7 +109,7 @@ ActiveAdmin.register Applicant do
         pf.input :payable_amount
         pf.input :paid_amount
         pf.input :payment_date, as: :datepicker
-        pf.input :updated_by
+        #pf.input :updated_by
       end
     else
       f.has_many :payment_histories, allow_destroy: true, new_record: true do |pf|
@@ -110,7 +140,9 @@ ActiveAdmin.register Applicant do
       row :jlpt_level
       row :whatsapp
       row :amount
-      row :balance
+      row :balance do |applicant|
+        applicant.latest_balance
+      end
       row :admission_date
       row :admission_done_by
       row :balance_reminder
