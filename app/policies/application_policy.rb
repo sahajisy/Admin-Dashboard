@@ -9,31 +9,31 @@ class ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.editor? # Example: Allow admins and editors to view the index
+    user.Admin? || user.Editor? || user.Viewer? # Example: Allow admins and editors to view the index
   end
 
   def show?
-    user.admin? || user.editor?
+    user.Admin? || user.Editor? || user.Viewer?
   end
 
   def create?
-    user.admin?
+    user.Admin?
   end
 
   def new?
-    user.admin?
+    user.Admin?
   end
 
   def update?
-    user.admin? || user.editor?
+    user.Admin? || user.Editor?
   end
 
   def edit?
-    user.admin?
+    user.Admin?
   end
 
   def destroy?
-    user.admin?
+    user.Admin?
   end
 
   class Scope
