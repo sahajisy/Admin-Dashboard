@@ -50,7 +50,7 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    active_skin (0.0.13)
+    active_material (2.1.4)
     activeadmin (3.2.5)
       arbre (~> 1.2, >= 1.2.1)
       csv
@@ -132,7 +132,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    draper (4.0.2)
+    draper (4.0.4)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
       activemodel-serializers-xml (>= 1.0)
@@ -192,9 +192,10 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    launchy (3.0.1)
+    launchy (3.1.0)
       addressable (~> 2.8)
       childprocess (~> 5.0)
+      logger (~> 1.6)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
     letter_opener_web (3.0.0)
@@ -215,16 +216,16 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.25.4)
-    msgpack (1.7.5)
+    msgpack (1.8.0)
     mutex_m (0.3.0)
-    net-imap (0.5.5)
+    net-imap (0.5.6)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.0)
+    net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
     nokogiri (1.18.2-aarch64-linux-gnu)
@@ -251,12 +252,12 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (6.5.0)
+    puma (6.6.0)
       nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
     racc (1.8.1)
-    rack (3.1.8)
+    rack (3.1.10)
     rack-session (2.1.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -294,11 +295,11 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rake (13.2.1)
-    ransack (4.2.1)
+    ransack (4.3.0)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
-    rdoc (6.11.0)
+    rdoc (6.12.0)
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
     reline (0.6.0)
@@ -380,7 +381,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  active_skin
+  active_material
   activeadmin
   bootsnap
   cancancan

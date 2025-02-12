@@ -2,6 +2,7 @@ class PaymentHistory < ApplicationRecord
     belongs_to :applicant
 
     before_validation :set_payable_amount_from_previous_balance, on: :create
+    after_save :send_payment_update_email, if: :saved_change_to_paid_amount?
 
     def self.ransackable_attributes(auth_object = nil)
       ["applicant_id", "created_at", "id", "id_value", "jlpt_level", "paid_amount", "payable_amount", "payment_date", "updated_at", "updated_by"]
@@ -26,4 +27,8 @@ class PaymentHistory < ApplicationRecord
       self.payable_amount ||= 0
       self.paid_amount ||= 0
     end  
+
+    def send_payment_update_email
+      ApplicantMailer.payment_updated(applicant, self).deliver_now
+    end
 end

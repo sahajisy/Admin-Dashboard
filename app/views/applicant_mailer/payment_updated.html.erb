@@ -1,0 +1,11 @@
+<h1>Applicant#payment_updated</h1>
+
+<p>Dear <%= @applicant.name %>,</p>
+<p>Your payment history has been updated. Here are the details:</p>
+<ul>
+  <li>Payable Amount: <%= @payment_history.payable_amount %></li>
+  <li>Paid Amount: <%= @payment_history.paid_amount %></li>
+  <li>Payment Date: <%= @payment_history.payment_date %></li>
+  <li>Balance: <%= @payment_history.balance %></li>
+</ul>
+<p>Thank you!</p>

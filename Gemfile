@@ -52,7 +52,7 @@ gem 'cancancan'
 gem 'draper'
 gem 'pundit'
 gem 'ransack'
-gem 'active_skin'
+gem 'active_material'
 gem 'sassc-rails'
 
 #for mail validation

@@ -1,0 +1,12 @@
+Applicant#payment_updated
+
+Dear <%= @applicant.name %>,
+
+Your payment history has been updated. Here are the details:
+
+Payable Amount: <%= @payment_history.payable_amount %>
+Paid Amount: <%= @payment_history.paid_amount %>
+Payment Date: <%= @payment_history.payment_date %>
+Balance: <%= @payment_history.balance %>
+
+Thank you!
