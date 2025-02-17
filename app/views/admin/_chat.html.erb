@@ -1,0 +1,26 @@
+<div id="chatbox">
+  <div id="messages" class="messages"></div>
+  <input type="text" id="message-input" placeholder="Say hi!!!">
+  <button id="send-button">Send</button>
+</div>
+
+<style>
+  #chatbox {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    background: #f1f1f1;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .messages {
+    height: 200px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+  .message {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+</style>
