@@ -1,4 +1,4 @@
-import consumer from "channels/consumer"
+import consumer from "./consumer"
 
 consumer.subscriptions.create("ChatChannel", {
   connected() {
@@ -12,7 +12,9 @@ consumer.subscriptions.create("ChatChannel", {
   received(data) {
     // Append message to the chat box
     const messages = document.getElementById('messages')
-    messages.innerHTML += `<div class="message">${data.message}</div>`
+    if (messages) {
+      messages.innerHTML += `<div class="message">${data.message}</div>`
+    }
   },
 
   speak(message) {
@@ -25,9 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('message-input')
   const button = document.getElementById('send-button')
 
-  button.addEventListener('click', () => {
-    const message = input.value
-    consumer.subscriptions.subscriptions[0].speak(message)
-    input.value = ''
-  })
+  if (button) {
+    button.addEventListener('click', () => {
+      const message = input.value
+      consumer.subscriptions.subscriptions[0].speak(message)
+      input.value = ''
+    })
+  }
 })

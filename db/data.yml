@@ -1,0 +1,432 @@
+
+---
+applicants:
+  columns:
+  - id
+  - serial_no
+  - category
+  - location
+  - programme
+  - college
+  - branch
+  - graduation_year
+  - name
+  - batch
+  - whatsapp_number
+  - inheritance
+  - a2j_id
+  - mail_id
+  - jlpt_level
+  - whatsapp
+  - amount
+  - balance
+  - admission_date
+  - admission_done_by
+  - balance_reminder
+  - recipt_no
+  - payment_mode
+  - remarks
+  - created_at
+  - updated_at
+  records: 
+  - - 36
+    - 
+    - Working Professional
+    - Local
+    - Regular
+    - Test
+    - Test
+    - Test
+    - Test
+    - Daisen
+    - '1234567890'
+    - New
+    - A2J150
+    - sbalgunde@gmail.com
+    - N4
+    - 'Yes'
+    - 12000
+    - 13000
+    - '2025-01-27'
+    - test@user.com
+    - Yes-Reminder 1
+    - Test
+    - UPI QR
+    - ''
+    - '2025-01-29 12:01:09.351130'
+    - '2025-01-29 12:01:09.351130'
+  - - 37
+    - 
+    - Student
+    - Local
+    - Regular
+    - Test
+    - Test
+    - Test
+    - Test
+    - Takao
+    - '1234567890'
+    - New
+    - A2J150
+    - sbalgunde@gmail.com
+    - N5
+    - 'Yes'
+    - 10000
+    - 
+    - '2025-01-27'
+    - test@user.com
+    - Yes-Reminder 1
+    - Test
+    - UPI QR
+    - This is test form
+    - '2025-01-29 12:08:52.287893'
+    - '2025-01-29 12:08:52.287893'
+  - - 38
+    - 
+    - Student
+    - Local
+    - Regular
+    - Test
+    - Test
+    - Test
+    - Test
+    - Daisen
+    - '1234567890'
+    - Repeater
+    - A2J150
+    - sbalgunde@gmail.com
+    - N3
+    - 'Yes'
+    - 13000
+    - 
+    - '2025-01-27'
+    - test@user.com
+    - Yes-Reminder 1
+    - Test
+    - Cash
+    - This is test form
+    - '2025-01-29 12:35:03.432093'
+    - '2025-01-29 12:35:03.432093'
+  - - 39
+    - 
+    - Student
+    - Local
+    - Regular
+    - Test
+    - ''
+    - Test
+    - Test
+    - Daisen
+    - '1234567890'
+    - New
+    - A2J150
+    - sbalgunde@gmail.com
+    - N3
+    - 'Yes'
+    - 13000
+    - 
+    - '2025-01-27'
+    - test@user.com
+    - Yes-Reminder 2
+    - Test
+    - Cash
+    - This is test form
+    - '2025-01-29 12:51:35.168827'
+    - '2025-01-29 12:51:35.168827'
+  - - 40
+    - 
+    - Student
+    - Local
+    - Regular
+    - Test
+    - Test
+    - Test
+    - Test
+    - Daisen
+    - '1234567890'
+    - New
+    - A2J150
+    - sbalgunde@gmail.com
+    - N3
+    - 'Yes'
+    - 13000
+    - 
+    - '2025-01-27'
+    - test@user.com
+    - Yes-Reminder 1
+    - Test
+    - UPI QR
+    - This is test form
+    - '2025-01-29 16:45:11.630439'
+    - '2025-01-29 16:45:11.630439'
+  - - 41
+    - 
+    - Working Professional
+    - Non Local
+    - Regular
+    - Test
+    - Test
+    - Test
+    - Laxus Dreyar
+    - Takao
+    - '1234567890'
+    - New
+    - A2J150
+    - sbalgunde@gmail.com
+    - N5
+    - 'No'
+    - 10000
+    - 
+    - '2025-01-08'
+    - test@user.com
+    - 'No'
+    - A2JR123
+    - UPI QR
+    - This is the test
+    - '2025-01-29 17:46:16.095126'
+    - '2025-01-29 17:46:16.095126'
+  - - 42
+    - 
+    - Student
+    - Non Local
+    - Regular
+    - Bharati Vidyapeeth
+    - MCA
+    - '2020'
+    - Sahaj Balgunde
+    - Fujisan
+    - '1234567890'
+    - Repeater
+    - A2J150
+    - sbalgunde@gmail.com
+    - N2
+    - 'Yes'
+    - 14000
+    - 
+    - '2025-01-15'
+    - sahaj
+    - Yes-Reminder 1
+    - A2JR123
+    - Cash
+    - Just to check if it works fine.
+    - '2025-01-29 19:56:39.854947'
+    - '2025-02-12 07:51:51.899130'
+
+---
+ar_internal_metadata:
+  columns:
+  - key
+  - value
+  - created_at
+  - updated_at
+  records: 
+  - - environment
+    - development
+    - '2025-01-22 06:30:42.210402'
+    - '2025-01-22 06:30:42.210407'
+
+---
+payment_histories:
+  columns:
+  - id
+  - jlpt_level
+  - payable_amount
+  - paid_amount
+  - payment_date
+  - updated_by
+  - created_at
+  - updated_at
+  - applicant_id
+  records: 
+  - - 51
+    - 
+    - 13000
+    - 6000
+    - '2025-01-06'
+    - ''
+    - '2025-01-29 12:01:09.358016'
+    - '2025-01-29 12:01:09.358016'
+    - 36
+  - - 52
+    - 
+    - 10000
+    - 6000
+    - '2025-01-04'
+    - ''
+    - '2025-01-29 12:08:52.291807'
+    - '2025-01-29 12:08:52.291807'
+    - 37
+  - - 53
+    - 
+    - 13000
+    - 5000
+    - '2025-01-04'
+    - ''
+    - '2025-01-29 12:35:03.435265'
+    - '2025-01-29 12:35:03.435265'
+    - 38
+  - - 54
+    - 
+    - 
+    - 5000
+    - '2025-01-04'
+    - 
+    - '2025-01-29 12:36:16.663351'
+    - '2025-01-29 12:36:16.663351'
+    - 38
+  - - 55
+    - 
+    - 12000
+    - 5000
+    - '2025-01-04'
+    - ''
+    - '2025-01-29 12:51:35.171776'
+    - '2025-01-29 12:51:35.171776'
+    - 39
+  - - 56
+    - 
+    - 7000
+    - 5000
+    - '2025-01-04'
+    - 
+    - '2025-01-29 12:52:11.038133'
+    - '2025-01-29 12:52:11.038133'
+    - 39
+  - - 57
+    - 
+    - 7000
+    - 4000
+    - '2025-01-09'
+    - 
+    - '2025-01-29 12:52:11.039810'
+    - '2025-01-29 12:52:11.039810'
+    - 39
+  - - 58
+    - 
+    - 12000
+    - 5000
+    - '2025-01-04'
+    - test@user.com
+    - '2025-01-29 16:45:11.639814'
+    - '2025-01-29 17:01:09.584107'
+    - 40
+  - - 59
+    - 
+    - 7000
+    - 4000
+    - '2025-01-06'
+    - test@user.com
+    - '2025-01-29 17:01:09.604221'
+    - '2025-01-29 17:01:09.604221'
+    - 40
+  - - 60
+    - 
+    - 10000
+    - 3000
+    - '2025-01-12'
+    - test@user.com
+    - '2025-01-29 17:46:16.104024'
+    - '2025-01-29 17:46:34.535718'
+    - 41
+  - - 61
+    - 
+    - 7000
+    - 7000
+    - '2025-01-25'
+    - test@user.com
+    - '2025-01-29 17:46:34.554393'
+    - '2025-01-29 17:46:34.554393'
+    - 41
+  - - 62
+    - 
+    - 13000
+    - 7000
+    - '2025-01-12'
+    - sahaj
+    - '2025-01-29 19:56:39.861848'
+    - '2025-02-12 07:50:46.211157'
+    - 42
+  - - 63
+    - 
+    - 6000
+    - 4000
+    - '2025-02-12'
+    - sahaj
+    - '2025-02-12 07:52:12.330270'
+    - '2025-02-12 07:52:12.330270'
+    - 42
+
+---
+users:
+  columns:
+  - id
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - remember_created_at
+  - created_at
+  - updated_at
+  - username
+  - role
+  records: 
+  - - 1
+    - admin@example.com
+    - "$2a$12$F7ZyPf.d8oV3UeO9IwFir./Gwhx/SgugxsFGWf4iMFSeA/VYjSgS2"
+    - 
+    - 
+    - 
+    - '2025-01-22 06:30:45.158076'
+    - '2025-02-12 07:49:55.931934'
+    - sbalgunde@gmail.com
+    - 0
+  - - 2
+    - sbalgunde@gmail.com
+    - "$2a$12$BP.mWzTRGipBa504wd66huhoZkJ5vBaQFI7U0h2L/ZXcAphT7R7HS"
+    - 
+    - 
+    - 
+    - '2025-01-22 07:43:46.701277'
+    - '2025-01-30 18:55:44.550152'
+    - sahaj
+    - 0
+  - - 3
+    - hirameki@one.com
+    - "$2a$12$4x/FXfsH0x/U1HzvhCYEp.HUwgICwGg0CnRhzKYcs5HhDizX.lKN2"
+    - 
+    - 
+    - 
+    - '2025-01-22 07:46:59.274378'
+    - '2025-01-22 07:46:59.274378'
+    - hirameki1
+    - 
+  - - 4
+    - 1@test.com
+    - "$2a$12$5weklRb37vA//f/VcUK5EOVfgAwtzV7aBY7DnbMG6zUaONEKJLw3q"
+    - 
+    - 
+    - 
+    - '2025-01-22 10:43:50.128541'
+    - '2025-01-31 13:55:12.092254'
+    - test1
+    - 1
+  - - 5
+    - test@user.com
+    - "$2a$12$kzzciGuJkEFJ.mvotkyzLuGeldBdSPqQQpvSxRnsr80PB98Am94Vy"
+    - 
+    - 
+    - 
+    - '2025-01-28 17:56:07.967970'
+    - '2025-01-30 19:00:29.764096'
+    - test@user.com
+    - 2
+  - - 6
+    - admin@test.com
+    - "$2a$12$DeF/AAGiqrxBWtGGZkohX.50Z0lYmIrztbiQDZxTDSlAX4HaBtHca"
+    - 
+    - 
+    - 
+    - '2025-01-30 19:34:27.235511'
+    - '2025-01-30 19:34:27.235511'
+    - Adminuser
+    - 0
