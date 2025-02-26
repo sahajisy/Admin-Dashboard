@@ -1,6 +1,7 @@
 ActiveAdmin.register Applicant do
   permit_params :serial_no, :category, :location, :programme, :college, :branch, :graduation_year, :name, :batch, :whatsapp_number, :inheritance, :a2j_id, :mail_id, :jlpt_level, :whatsapp, :amount, :balance, :admission_date, :admission_done_by, :balance_reminder, :recipt_no, :payment_mode, :remarks, payment_histories_attributes: [:jlpt_level, :payable_amount, :paid_amount, :payment_date, :updated_by, :_destroy, :applicant_id]
-
+  remove_filter :scores
+  remove_filter :exams
   controller do
     def create
       @applicant = Applicant.new(permitted_params[:applicant])

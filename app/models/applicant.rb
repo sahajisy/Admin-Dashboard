@@ -7,6 +7,9 @@ class Applicant < ApplicationRecord
   validates :whatsapp_number, presence: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
   validates :mail_id, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
 
+  has_many :scores
+  has_many :exams, through: :scores
+  
   # Specify searchable attributes
   def self.ransackable_attributes(auth_object = nil)
     ["a2j_id", "admission_date", "admission_done_by", "amount", "balance", "balance_reminder", 

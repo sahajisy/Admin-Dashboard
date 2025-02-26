@@ -1,0 +1,6 @@
+<h1>Available Exams</h1>
+<ul>
+  <% @exams.each do |exam| %>
+    <li><%= link_to exam.title, exam_path(exam) %></li>
+  <% end %>
+</ul>

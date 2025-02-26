@@ -1,0 +1,41 @@
+<h1><%= @exam.title %></h1>
+<p><%= @exam.description %></p>
+<p>Duration: <%= @exam.duration %> minutes</p>
+<p>Time Remaining: <span id="timer"></span></p>
+
+<%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
+  <% @questions.each do |question| %>
+    <h3><%= question.content %></h3>
+    <% question.answers.shuffle.each do |answer| %>
+      <label>
+        <%= radio_button_tag "answers[#{question.id}]", answer.id %> <%= answer.content %>
+      </label><br>
+    <% end %>
+  <% end %>
+  <%= submit_tag "Submit" %>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const endTime = new Date("<%= @end_time %>").getTime();
+    const timerElement = document.getElementById('timer');
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.innerHTML = minutes + "m " + seconds + "s ";
+
+      if (distance < 0) {
+        clearInterval(interval);
+        timerElement.innerHTML = "EXPIRED";
+        document.querySelector('form').submit(); // Auto-submit the form
+      }
+    };
+
+    const interval = setInterval(updateTimer, 1000);
+  });
+</script>
