@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get 'exam_sessions/new'
+  get 'exam_sessions/create'
+  get 'exam_sessions/destroy'
   get 'exams/index'
-  get 'exams/login'
-  get 'exams/show'
-  get 'exams/submit'
+  get 'exams/create'
+  get 'exams/save'
   mount ActionCable.server => '/cable'
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -19,8 +21,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-
-  resources :exams, only: [:index, :show] do
-    post :submit, on: :member
+  resources :exam_sessions, only: [:new, :create, :destroy]
+  
+  resources :exams, only: [:show] do
+    member do
+      post :submit
+      #get :result  # To view exam result
+    end
+    collection do
+      get :thank_you  # Thank you page after exam submission
+    end
   end
+
 end

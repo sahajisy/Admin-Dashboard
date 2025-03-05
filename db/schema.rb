@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_25_094939) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_04_164707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,13 +29,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_094939) do
   end
 
   create_table "answers", force: :cascade do |t|
-    t.text "content"
-    t.boolean "correct"
+    t.bigint "applicant_id", null: false
+    t.bigint "question_id", null: false
+    t.bigint "option_id", null: false
     t.string "created_by"
     t.string "updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "question_id", null: false
+    t.index ["applicant_id"], name: "index_answers_on_applicant_id"
+    t.index ["option_id"], name: "index_answers_on_option_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
@@ -77,11 +79,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_094939) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "exams_questions", id: false, force: :cascade do |t|
-    t.bigint "exam_id", null: false
+  create_table "options", force: :cascade do |t|
+    t.string "content"
+    t.boolean "correct"
     t.bigint "question_id", null: false
-    t.index ["exam_id", "question_id"], name: "index_exams_questions_on_exam_id_and_question_id"
-    t.index ["question_id", "exam_id"], name: "index_exams_questions_on_question_id_and_exam_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_options_on_question_id"
   end
 
   create_table "payment_histories", force: :cascade do |t|
@@ -98,10 +104,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_094939) do
 
   create_table "questions", force: :cascade do |t|
     t.text "content"
+    t.bigint "exam_id", null: false
     t.string "created_by"
     t.string "updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_questions_on_exam_id"
   end
 
   create_table "scores", force: :cascade do |t|
@@ -128,8 +136,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_094939) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers", "applicants"
+  add_foreign_key "answers", "options"
   add_foreign_key "answers", "questions"
+  add_foreign_key "options", "questions"
   add_foreign_key "payment_histories", "applicants"
+  add_foreign_key "questions", "exams"
   add_foreign_key "scores", "applicants"
   add_foreign_key "scores", "exams"
 end

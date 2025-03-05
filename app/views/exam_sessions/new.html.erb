@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exam Login</title>
+  <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", 
+      integrity: "sha384-Gn5384xqQ1aoWXA+", 
+      crossorigin: "anonymous" %>
+  <style type="text/css">
+    body {
+      background-color: #f7f7f7;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .login-container h1 {
+      margin-bottom: 20px;
+    }
+    .login-container .form-group {
+      margin-bottom: 20px;
+    }
+    .login-container .btn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-container">
+      <h1 class="text-center">Exam Login</h1>
+      <p class="text-center">Enter the email address where your exam link was sent.</p>
+      
+      <%= form_with url: exam_sessions_path, method: :post, local: true do %>
+        <%= hidden_field_tag :exam_id, params[:exam_id] %>
+        
+        <div class="form-group">
+          <%= label_tag :email, "Email", class: "font-weight-bold" %>
+          <%= text_field_tag :email, nil, class: "form-control", placeholder: "Enter your email" %>
+        </div>
+        
+        <div class="form-group">
+          <%= submit_tag "Login and Start Exam", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+      
+      <div class="text-center mt-3">
+        <%= link_to "Back", root_path, class: "text-muted" %>
+      </div>
+    </div>
+  </div>
+  
+  <%= javascript_include_tag "https://code.jquery.com/jquery-3.2.1.slim.min.js", 
+      integrity: "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN", 
+      crossorigin: "anonymous" %>
+  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", 
+      integrity: "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9ieWo+xC3zmpu", 
+      crossorigin: "anonymous" %>
+  <%= javascript_include_tag "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js", 
+      integrity: "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl", 
+      crossorigin: "anonymous" %>
+</body>
+</html>

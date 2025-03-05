@@ -1,5 +1,5 @@
 class Exam < ApplicationRecord
-    has_and_belongs_to_many :questions
+    has_many :questions, dependent: :destroy
     has_many :scores, dependent: :destroy
     has_many :applicants, through: :scores
   
@@ -10,5 +10,6 @@ class Exam < ApplicationRecord
     def self.ransackable_attributes(auth_object = nil)
         ["created_at", "created_by", "description", "duration", "id", "id_value", "title", "updated_at", "updated_by"]
     end
+    
   end
   
