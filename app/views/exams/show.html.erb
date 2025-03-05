@@ -1,0 +1,38 @@
+<h1><%= @exam.title %></h1>
+<p><%= @exam.description %></p>
+<p>Time Remaining: <span id="timer"></span></p>
+
+<%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
+  <% @questions.each do |question| %>
+    <div class="question">
+      <h3><%= question.content %></h3>
+      <% # Shuffle options for each question %>
+      <% question.options.shuffle.each do |option| %>
+        <label>
+          <%= radio_button_tag "answers[#{question.id}]", option.id %>
+          <%= option.content %>
+        </label><br>
+      <% end %>
+    </div>
+  <% end %>
+  <%= hidden_field_tag :applicant_id, @applicant.id %>
+  <%= submit_tag 'Submit Exam' %>
+<% end %>
+
+<%= javascript_tag do %>
+  // Timer countdown (in milliseconds)
+  var endTime = new Date("<%= @end_time.strftime('%Y-%m-%dT%H:%M:%S') %>").getTime();
+  var timerInterval = setInterval(function() {
+    var now = new Date().getTime();
+    var timeLeft = endTime - now;
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.forms[0].submit(); // auto-submit the exam
+    } else {
+      var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      document.getElementById("timer").textContent = minutes + "m " + seconds + "s";
+    }
+  }, 1000);
+<% end %>

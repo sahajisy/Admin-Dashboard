@@ -8,7 +8,7 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     []
   end
-  validates :username, presence: true, uniqueness: { message: "Username is already taken. Please choose another." }
+ # validates :username, presence: true, uniqueness: { message: "Username is already taken. Please choose another." }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Email format is invalid." }
   devise :database_authenticatable, 
          :recoverable, :rememberable, :validatable

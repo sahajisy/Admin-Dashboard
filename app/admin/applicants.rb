@@ -1,6 +1,8 @@
 ActiveAdmin.register Applicant do
   permit_params :serial_no, :category, :location, :programme, :college, :branch, :graduation_year, :name, :batch, :whatsapp_number, :inheritance, :a2j_id, :mail_id, :jlpt_level, :whatsapp, :amount, :balance, :admission_date, :admission_done_by, :balance_reminder, :recipt_no, :payment_mode, :remarks, payment_histories_attributes: [:jlpt_level, :payable_amount, :paid_amount, :payment_date, :updated_by, :_destroy, :applicant_id]
-
+  remove_filter:exams
+  remove_filter:scores
+  remove_filter:answers
   controller do
     def create
       @applicant = Applicant.new(permitted_params[:applicant])
@@ -76,7 +78,17 @@ index do
       column :recipt_no
       column :payment_mode
       column :remarks
-      actions
+      column 'Exam Link' do |applicant|
+        if applicant.exams.any?
+          link_to 'Send Exam Link', exam_path(applicant.exams.last, applicant_id: applicant.id)
+        else
+          'No Exam Assigned'
+        end
+      end
+      column 'Scores Uptil Now' do |applicant|
+        applicant.scores.map { |s| "Exam: #{s.exam.title} -> #{s.score}" }
+      end
+    actions
     end
 
   form do |f|

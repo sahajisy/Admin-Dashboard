@@ -1,0 +1,10 @@
+<!-- app/views/exam_mailer/send_exam_link.html.erb -->
+<p>Hello <%= @applicant.name %>,</p>
+
+<p>You are invited to take the exam: <strong><%= @exam.title %></strong>.</p>
+
+<p>Please click the link below to start your exam:</p>
+
+<p><%= link_to 'Take Exam', @exam_url %></p>
+
+<p>Good luck!</p>

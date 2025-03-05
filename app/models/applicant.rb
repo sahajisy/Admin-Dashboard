@@ -1,5 +1,10 @@
 class Applicant < ApplicationRecord
   has_many :payment_histories, dependent: :destroy
+
+  has_many :answers, dependent: :destroy
+  has_many :scores, dependent: :destroy
+  has_many :exams, through: :scores
+  
   accepts_nested_attributes_for :payment_histories, allow_destroy: true
 
   before_save :set_amount_based_on_jlpt_level
