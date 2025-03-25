@@ -1,6 +1,8 @@
 class ExamsController < ApplicationController
   before_action :set_exam, only: [:show, :submit]
   before_action :authenticate_exam_applicant!, only: [:show, :submit]
+  before_action :check_already_taken, only: [:show, :submit]
+
 
   def show
     @applicant = current_exam_applicant
@@ -29,8 +31,16 @@ class ExamsController < ApplicationController
 
   private
 
+  # If an encoded parameter is provided, decode it; otherwise, use normal parameters
   def set_exam
-    @exam = Exam.find(params[:id])
+    if params[:encoded].present?
+      exam_id, applicant_id = decode_encoded_params(params[:encoded])
+      @exam = Exam.find(exam_id)
+      # Optionally, if applicant_id is provided via encoded params, store the applicant id in session:
+      session[:exam_applicant_id] = applicant_id
+    else
+      @exam = Exam.find(params[:id])
+    end
   end
 
   # Check if an applicant has “logged in” (i.e. their id is saved in session)
@@ -46,4 +56,24 @@ class ExamsController < ApplicationController
   def current_exam_applicant
     Applicant.find(session[:exam_applicant_id])
   end
+
+    # Generate an encoded string from exam_id and applicant_id using Base64 (simple obfuscation)
+  def generate_encoded_params(exam_id, applicant_id)
+    raw = "#{exam_id}:#{applicant_id}"
+    Base64.urlsafe_encode64(raw)
+  end 
+
+  # Decode the encoded parameter back into exam_id and applicant_id
+  def decode_encoded_params(encoded)
+    decoded = Base64.urlsafe_decode64(encoded)
+    decoded.split(":")
+  end
+
+    # Check if the applicant has already appeared for the exam
+    def check_already_taken
+      if Score.exists?(exam: @exam, applicant: current_exam_applicant)
+        flash[:alert] = "You have already appeared for this exam."
+        redirect_to thank_you_exams_path(@exam, applicant_id: current_exam_applicant.id)
+      end
+    end  
 end
