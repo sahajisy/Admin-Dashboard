@@ -1,7 +1,10 @@
 class ExamsController < ApplicationController
+  LEVEL_ORDER = { "N5" => 1, "N4" => 2, "N3" => 3, "N2" => 4}
   before_action :set_exam, only: [:show, :submit]
   before_action :authenticate_exam_applicant!, only: [:show, :submit]
-  before_action :check_already_taken, only: [:show, :submit]
+  #before_action :check_already_taken, only: [:show, :submit]
+  before_action :check_exam_eligibility, only: [:show, :submit]
+
 
 
   def show
@@ -20,6 +23,10 @@ class ExamsController < ApplicationController
       Answer.create(question_id: question_id, option_id: option_id, applicant_id: @applicant.id)
     end
     Score.create(exam: @exam, applicant: @applicant, score: total_score)
+
+    score_record = Score.create(exam: @exam, applicant: @applicant, score: total_score)
+
+    ExamMailer.send_score(@exam, @applicant, score_record.score).deliver_now
 
     # Redirect to a thank you page after exam submission (either submitted via button or auto-submitted on timer expiry)
     redirect_to thank_you_exams_path, notice: 'Exam submitted successfully!'
@@ -76,4 +83,22 @@ class ExamsController < ApplicationController
         redirect_to thank_you_exams_path(@exam, applicant_id: current_exam_applicant.id)
       end
     end  
+      # Check if the applicant's JLPT level qualifies for the exam.
+  # In this example, we assume an applicant must have a JLPT level
+  # equal to or higher (numerically) than @exam.required_jlpt_level.
+  def check_exam_eligibility
+    required = @exam.required_jlpt_level
+    return if required.blank?  # If no requirement is set, allow access
+
+    applicant = current_exam_applicant
+
+    # If the applicant's level (numeric) is not equal to the required level's value,
+    # then redirect them.
+    if LEVEL_ORDER[applicant.jlpt_level] != LEVEL_ORDER[required]
+          Rails.logger.info "Applicant's Level: #{current_exam_applicant.jlpt_level}"
+          Rails.logger.info "Required Level: #{@exam.required_jlpt_level}"
+      flash[:alert] = "You are not eligible for this exam. This exam is designed for applicants with level #{required}."
+      redirect_to root_path and return
+    end
+  end
 end

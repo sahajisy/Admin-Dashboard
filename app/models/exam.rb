@@ -2,7 +2,8 @@ class Exam < ApplicationRecord
     has_many :questions, dependent: :destroy
     has_many :scores, dependent: :destroy
     has_many :applicants, through: :scores
-  
+    validates :required_jlpt_level, inclusion: { in: %w(N5 N4 N3 N2), allow_blank: true }
+
     accepts_nested_attributes_for :questions, allow_destroy: true
     def self.ransackable_associations(auth_object = nil)
         ["applicants", "questions", "scores"]

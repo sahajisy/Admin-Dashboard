@@ -1,6 +1,7 @@
 ActiveAdmin.register Exam do
-  permit_params :title, :description, :duration,
+  permit_params :title, :description, :duration,:required_jlpt_level,
                 questions_attributes: [:id, :content, :_destroy, options_attributes: [:id, :content, :correct, :_destroy]]
+                remove_filter :required_jlpt_level
 
 
   form do |f|
@@ -8,6 +9,7 @@ ActiveAdmin.register Exam do
       f.input :title
       f.input :description
       f.input :duration, label: "Duration (minutes)"
+      f.input :required_jlpt_level, as: :select, collection: ['N5', 'N4', 'N3', 'N2']
     end
 
     f.inputs "Select Pre-Created Questions" do

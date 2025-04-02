@@ -13,5 +13,11 @@ class ExamMailer < ApplicationMailer
   
       mail(to: @applicant.mail_id, subject: "Your OTP for #{@exam.title} Exam")
     end
+    def send_score(exam, applicant, score)
+      @exam = exam
+      @applicant = applicant
+      @score = score
+      mail(to: @applicant.mail_id, subject: "Your Score for #{@exam.title} Exam")
+    end  
   end
   
