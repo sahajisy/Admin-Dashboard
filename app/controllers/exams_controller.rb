@@ -2,7 +2,7 @@ class ExamsController < ApplicationController
   LEVEL_ORDER = { "N5" => 1, "N4" => 2, "N3" => 3, "N2" => 4}
   before_action :set_exam, only: [:show, :submit]
   before_action :authenticate_exam_applicant!, only: [:show, :submit]
-  #before_action :check_already_taken, only: [:show, :submit]
+  before_action :check_already_taken, only: [:show, :submit]
   before_action :check_exam_eligibility, only: [:show, :submit]
 
 
@@ -98,7 +98,7 @@ class ExamsController < ApplicationController
           Rails.logger.info "Applicant's Level: #{current_exam_applicant.jlpt_level}"
           Rails.logger.info "Required Level: #{@exam.required_jlpt_level}"
       flash[:alert] = "You are not eligible for this exam. This exam is designed for applicants with level #{required}."
-      redirect_to root_path and return
+      redirect_to wrong_exam_exams_path(@exam, applicant_id: current_exam_applicant.id)
     end
   end
 end
