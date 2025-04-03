@@ -96,7 +96,7 @@ class ExamsController < ApplicationController
     # then redirect them.
     if LEVEL_ORDER[applicant.jlpt_level] != LEVEL_ORDER[required]
           Rails.logger.info "Applicant's Level: #{current_exam_applicant.jlpt_level}"
-          Rails.logger.info "Required Level: #{@exam.required_jlpt_level}"
+          Rails.logger.info "Required Level for exam: #{@exam.required_jlpt_level}"
       flash[:alert] = "You are not eligible for this exam. This exam is designed for applicants with level #{required}."
       redirect_to wrong_exam_exams_path(@exam, applicant_id: current_exam_applicant.id)
     end
