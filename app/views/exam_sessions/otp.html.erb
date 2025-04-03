@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Login</title>
+    <title>OTP Verification</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -22,11 +22,10 @@
             max-width: 400px;
             width: 100%; /* Make it responsive */
             padding: 30px;
-            background-color: rgba(255, 255, 255); /* white background */
+            background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-
 
         h1 {
             font-size: 2.5em;
@@ -43,7 +42,7 @@
         .form-control {
             border-radius: 5px;
             border: 1px solid #ccc;
-            width: 500px;
+            width: 100%;
             transition: border-color 0.3s;
         }
 
@@ -52,8 +51,8 @@
             box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
         }
 
-        .btn-primary {
-            background-color: #4CAF50;
+        .btn-success {
+            background-color: #28a745;
             border: none;
             border-radius: 5px;
             padding: 10px;
@@ -61,55 +60,26 @@
             transition: background-color 0.3s;
         }
 
-        .btn-primary:hover {
-            background-color: #45a049;
+        .btn-success:hover {
+            background-color: #218838;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
-        .rajdhani-light {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.rajdhani-regular {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.rajdhani-medium {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.rajdhani-semibold {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.rajdhani-bold {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Exam Login</h1>
-        <p class="text-center">Enter the Email where your exam link was sent.</p>
+        <h1 class="text-center">OTP Verification</h1>
+        <p class="text-center">Please enter the 6-digit OTP sent to your Mail ID.</p>
 
         <%= form_with url: exam_sessions_path, method: :post, local: true, data: { turbo: false } do %>
             <%= hidden_field_tag :exam_id, params[:exam_id] %>
+            <%= hidden_field_tag :email, params[:email] || @applicant&.mail_id %>
+
             <div class="form-group">
-                <%= label_tag :email, "Email", class: "font-weight-bold" %>
-                <%= text_field_tag :email, nil, class: "form-control", placeholder: "Enter your Email", style: "width: 340px;"%>
+                <%= label_tag :otp, "OTP", class: "font-weight-bold" %>
+                <%= text_field_tag :otp, nil, class: "form-control", placeholder: "Enter OTP", style: "width: 340px;" %>
             </div>
             <div class="form-group">
-                <%= submit_tag "Send OTP", class: "btn btn-primary btn-block" %>
+                <%= submit_tag "Verify OTP", class: "btn btn-success btn-block" %>
             </div>
         <% end %>
     </div>

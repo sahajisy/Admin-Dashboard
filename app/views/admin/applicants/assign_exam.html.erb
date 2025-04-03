@@ -1,0 +1,15 @@
+<div class="panel">
+  <h2>Assign Exam to Selected Applicants</h2>
+  <p>Select the exam you wish to assign below:</p>
+
+  <%= form_with url: bulk_assign_exam_admin_applicants_path, method: :post, local: true do %>
+    <div class="form-group">
+      <%= label_tag :exam_id, "Select Exam:" %>
+      <%= select_tag :exam_id, options_from_collection_for_select(@exams, :id, :title), class: "form-control" %>
+    </div>
+    <%= hidden_field_tag :applicant_ids, @applicant_ids.join(',') %>
+    <div class="form-group" style="margin-top: 20px;">
+      <%= submit_tag "Send Exam Link", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

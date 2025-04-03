@@ -11,6 +11,8 @@ class Applicant < ApplicationRecord
 
   validates :whatsapp_number, presence: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
   validates :mail_id, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
+  validates :jlpt_level, presence: true
+
 
   has_many :scores
   has_many :exams, through: :scores

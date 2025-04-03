@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     collection do
       get :thank_you  # Thank you page after exam submission
     end
+    collection do
+      get :wrong_exam # For wrong examinees
+    end
   end
 
 end

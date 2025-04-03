@@ -1,28 +1,45 @@
 ActiveAdmin.register Exam do
-  permit_params :title, :description, :duration,
+  permit_params :title, :description, :duration,:required_jlpt_level,
                 questions_attributes: [:id, :content, :_destroy, options_attributes: [:id, :content, :correct, :_destroy]]
+                remove_filter :required_jlpt_level
+
 
   form do |f|
-    f.inputs 'Exam Details' do
+    f.inputs "Exam Details" do
       f.input :title
       f.input :description
-      f.input :duration, label: 'Duration (minutes)'
+      f.input :duration, label: "Duration (minutes)"
+      f.input :required_jlpt_level, as: :select, collection: ['N5', 'N4', 'N3', 'N2']
     end
 
-    f.has_many :questions, allow_destroy: true, new_record: true do |q|
-      q.input :content
-      q.has_many :options, allow_destroy: true, new_record: true do |o|
-        o.input :content
-        o.input :correct, hint: "Check if this is the correct answer"
-      end
+    f.inputs "Select Pre-Created Questions" do
+      f.input :question_ids, 
+              as: :select, 
+              collection: Question.all.map { |q| ["#{q.content} (#{q.category})", q.id] },
+              input_html: { multiple: true },
+              label: "Choose Questions"
     end
 
     f.actions
   end
 
+  show do
+    attributes_table do
+      row :title
+      row :description
+      row :duration
+    end
+
+    panel "Questions" do
+      table_for exam.questions do
+        column("Question") { |question| question.content }
+        column("Category") { |question| question.category }
+      end
+    end
+  end
+
   # Action to send Exam Link to an applicant. For demonstration, we simply use the first applicant.
   member_action :send_exam_link, method: :post do
-    # In a real app, you would let the admin choose an applicant.
     applicant = Applicant.find(params[:applicant_id])
     ExamMailer.send_exam_link(resource, applicant).deliver_now
     redirect_to resource_path, notice: "Exam link sent to #{applicant.mail_id}."

@@ -1,4 +1,5 @@
 ActiveAdmin.register Answer do
+  menu false
   permit_params :question_id, :option_id, :applicant_id
 
   index do

@@ -1,23 +1,87 @@
-<h1><%= @exam.title %></h1>
-<p><%= @exam.description %></p>
-<p>Time Remaining: <span id="timer"></span></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= @exam.title %></title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .exam-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fafafa;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    #timer {
+      font-weight: bold;
+      color: #d9534f; /* Bootstrap danger color */
+    }
+    .submit-button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #5cb85c; /* Bootstrap success color */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .submit-button:hover {
+      background-color: #4cae4c; /* Darker green on hover */
+    }
+  </style>
+</head>
+<body>
 
-<%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
-  <% @questions.each do |question| %>
-    <div class="question">
-      <h3><%= question.content %></h3>
-      <% # Shuffle options for each question %>
-      <% question.options.shuffle.each do |option| %>
-        <label>
-          <%= radio_button_tag "answers[#{question.id}]", option.id %>
-          <%= option.content %>
-        </label><br>
-      <% end %>
-    </div>
+<div class="exam-container">
+  <h1><%= @exam.title %></h1>
+  <p>Description: <%= @exam.description %></p>
+  <p>Time Remaining: <span id="timer"></span></p>
+  <hr>
+
+  <%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
+    <% @questions.each do |question| %>
+      <div class="question">
+        <h3><%= question.content %></h3>
+        <% question.options.shuffle.each do |option| %>
+          <label>
+            <%= radio_button_tag "answers[#{question.id}]", option.id %>
+            <%= option.content %>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <%= hidden_field_tag :applicant_id, @applicant.id %>
+    <%= submit_tag 'Submit Exam', class: 'submit-button' %>
   <% end %>
-  <%= hidden_field_tag :applicant_id, @applicant.id %>
-  <%= submit_tag 'Submit Exam' %>
-<% end %>
+</div>
 
 <%= javascript_tag do %>
   // Timer countdown (in milliseconds)
@@ -36,3 +100,6 @@
     }
   }, 1000);
 <% end %>
+
+</body>
+</html>
