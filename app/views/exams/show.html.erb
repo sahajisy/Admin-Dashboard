@@ -7,15 +7,52 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <style>
     body {
+      background-image: url('<%= asset_path("login_bg.png") %>');
+      background-size: cover;
+      background-position: center; 
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
     }
-    h1 {
-      color: #333;
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid #ddd;
+    }
+
+    .description-left {
+      flex: 1;
+      text-align: left;
+    }
+
+    .title-center {
+      flex: 2;
       text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #333;
     }
+
+    .timer-right {
+      flex: 1;
+      text-align: right;
+      font-weight: bold;
+      color: #d9534f;
+    }
+
     .exam-container {
       max-width: 800px;
       margin: 0 auto;
@@ -24,6 +61,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
+
     .question {
       margin-bottom: 20px;
       padding: 15px;
@@ -31,20 +69,18 @@
       border-radius: 5px;
       background-color: #fafafa;
     }
+
     label {
       display: block;
       margin: 5px 0;
       cursor: pointer;
     }
-    #timer {
-      font-weight: bold;
-      color: #d9534f; /* Bootstrap danger color */
-    }
+
     .submit-button {
       display: block;
       width: 100%;
       padding: 10px;
-      background-color: #5cb85c; /* Bootstrap success color */
+      background-color: #5cb85c;
       color: white;
       border: none;
       border-radius: 5px;
@@ -52,54 +88,62 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
+
     .submit-button:hover {
-      background-color: #4cae4c; /* Darker green on hover */
+      background-color: #4cae4c;
     }
   </style>
 </head>
 <body>
+  <!-- Sticky Header -->
+  <div class="sticky-header">
+    <div class="description-left">
+      <p><strong>Description:</strong> <%= @exam.description %></p>
+    </div>
+    <div class="title-center">
+      <%= @exam.title %>
+    </div>
+    <div class="timer-right">
+      <p>Time Remaining: <span id="timer"></span></p>
+    </div>
+  </div>
 
-<div class="exam-container">
-  <h1><%= @exam.title %></h1>
-  <p>Description: <%= @exam.description %></p>
-  <p>Time Remaining: <span id="timer"></span></p>
-  <hr>
-
-  <%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
-    <% @questions.each do |question| %>
-      <div class="question">
-        <h3><%= question.content %></h3>
-        <% question.options.shuffle.each do |option| %>
-          <label>
-            <%= radio_button_tag "answers[#{question.id}]", option.id %>
-            <%= option.content %>
-          </label>
-        <% end %>
-      </div>
+  <!-- Scrollable Questions and Form -->
+  <div class="exam-container">
+    <%= form_with url: submit_exam_path(@exam, applicant_id: @applicant.id), method: :post do %>
+      <% @questions.each do |question| %>
+        <div class="question">
+          <h3><%= question.content %></h3>
+          <% question.options.shuffle.each do |option| %>
+            <label>
+              <%= radio_button_tag "answers[#{question.id}]", option.id %>
+              <%= option.content %>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <%= hidden_field_tag :applicant_id, @applicant.id %>
+      <%= submit_tag 'Submit Exam', class: 'submit-button' %>
     <% end %>
-    
-    <%= hidden_field_tag :applicant_id, @applicant.id %>
-    <%= submit_tag 'Submit Exam', class: 'submit-button' %>
+  </div>
+
+  <!-- Inline JavaScript -->
+  <%= javascript_tag do %>
+    var endTime = new Date("<%= @end_time.strftime('%Y-%m-%dT%H:%M:%S') %>").getTime();
+    var timerInterval = setInterval(function() {
+      var now = new Date().getTime();
+      var timeLeft = endTime - now;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        document.forms[0].submit();
+      } else {
+        var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        document.getElementById("timer").textContent = minutes + "m " + seconds + "s";
+      }
+    }, 1000);
   <% end %>
-</div>
-
-<%= javascript_tag do %>
-  // Timer countdown (in milliseconds)
-  var endTime = new Date("<%= @end_time.strftime('%Y-%m-%dT%H:%M:%S') %>").getTime();
-  var timerInterval = setInterval(function() {
-    var now = new Date().getTime();
-    var timeLeft = endTime - now;
-    
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      document.forms[0].submit(); // auto-submit the exam
-    } else {
-      var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-      document.getElementById("timer").textContent = minutes + "m " + seconds + "s";
-    }
-  }, 1000);
-<% end %>
-
 </body>
 </html>

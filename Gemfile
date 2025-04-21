@@ -68,6 +68,9 @@ end
 gem 'chartkick'
 gem 'groupdate' 
 
+#For more addons
+gem 'activeadmin_addons'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]

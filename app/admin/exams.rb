@@ -1,7 +1,9 @@
 ActiveAdmin.register Exam do
-  permit_params :title, :description, :duration,:required_jlpt_level,
-                questions_attributes: [:id, :content, :_destroy, options_attributes: [:id, :content, :correct, :_destroy]]
-                remove_filter :required_jlpt_level
+  permit_params :title, :description, :duration, :required_jlpt_level, :start_time, :end_time,
+  question_ids: [], # Explicitly allow question_ids as an array
+  questions_attributes: [:id, :content, :_destroy, options_attributes: [:id, :content, :correct, :_destroy]]
+
+remove_filter :required_jlpt_level
 
 
   form do |f|
@@ -10,14 +12,17 @@ ActiveAdmin.register Exam do
       f.input :description
       f.input :duration, label: "Duration (minutes)"
       f.input :required_jlpt_level, as: :select, collection: ['N5', 'N4', 'N3', 'N2']
+      f.input :start_time, as: :date_time_picker
+      f.input :end_time, as: :date_time_picker
     end
 
     f.inputs "Select Pre-Created Questions" do
-      f.input :question_ids, 
-              as: :select, 
-              collection: Question.all.map { |q| ["#{q.content} (#{q.category})", q.id] },
-              input_html: { multiple: true },
+      f.has_many :questions, allow_destroy: true, new_record: true do |q|
+        f.input :question_ids,
+              as: :select,
+              collection: Question.all.group_by(&:category).map { |category, questions| [category, questions.map { |q| [q.content, q.id] }] },
               label: "Choose Questions"
+    end
     end
 
     f.actions

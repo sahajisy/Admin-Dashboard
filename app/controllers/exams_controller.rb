@@ -4,6 +4,7 @@ class ExamsController < ApplicationController
   before_action :authenticate_exam_applicant!, only: [:show, :submit]
   before_action :check_already_taken, only: [:show, :submit]
   before_action :check_exam_eligibility, only: [:show, :submit]
+  before_action :check_exam_timing, only: [:show, :submit]
 
 
 
@@ -100,5 +101,14 @@ class ExamsController < ApplicationController
       flash[:alert] = "You are not eligible for this exam. This exam is designed for applicants with level #{required}."
       redirect_to wrong_exam_exams_path(@exam, applicant_id: current_exam_applicant.id)
     end
+  end
+  def check_exam_timing
+    if Time.current < @exam.start_time
+      flash[:alert] = "The exam has not started yet. It will begin at #{@exam.start_time.strftime("%I:%M %p")}."
+      redirect_to root_path and return
+    elsif Time.current > @exam.end_time
+      flash[:alert] = "The exam ended at #{@exam.end_time.strftime("%I:%M %p")}. You cannot take the exam now."
+      redirect_to root_path and return
+    end  
   end
 end
