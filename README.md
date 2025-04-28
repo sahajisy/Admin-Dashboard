@@ -1,24 +1,31 @@
-# README
+# Admin Dashboard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A comprehensive administration system for managing student applications, exams, and assessments.
 
-Things you may want to cover:
+## Documentation
 
-* Ruby version
+Please visit our [Wiki](docs/wiki/Home.md) for complete documentation.
 
-* System dependencies
+## Quick Start
 
-* Configuration
+1. Clone the repository
+2. Run `bundle install`
+3. Configure database in `config/database.yml`
+4. Run migrations: `rails db:migrate`
+5. Start the server: `rails s`
 
-* Database creation
+## Features
 
-* Database initialization
+- Student Application Management
+- Exam Management
+- Payment Tracking
+- Assessment System
+- JLPT Level Management
 
-* How to run the test suite
+## Contributing
 
-* Services (job queues, cache servers, search engines, etc.)
+Please read our [Contributing Guide](docs/wiki/Contributing.md) before submitting pull requests.
 
-* Deployment instructions
+## License
 
-* ...
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
