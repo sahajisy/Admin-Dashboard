@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Details</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                  url('<%= asset_path("login_bg.png") %>') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .card p strong {
+      color: #333;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #45a049;
+    }
+
+    .btn-disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <!-- Flash Messages -->
+  <%= render 'shared/flash' %>
+
+  <div class="card">
+    <h1>Exam Details</h1>
+    <p><strong>Title:</strong> <%= @exam.title %></p>
+    <p><strong>Description:</strong> <%= @exam.description %></p>
+    <p><strong>Duration:</strong> <%= @exam.duration %> minutes</p>
+    <p><strong>Start Time:</strong> <%= @exam.start_time.strftime("%I:%M %p") %></p>
+    <p><strong>End Time:</strong> <%= @exam.end_time.strftime("%I:%M %p") %></p>
+
+    <% if Time.current < @exam.start_time %>
+      <a href="#" class="btn-primary btn-disabled" onclick="return false;">Exam Not Started</a>
+    <% elsif Time.current > @exam.end_time %>
+      <a href="#" class="btn-primary btn-disabled" onclick="return false;">Exam Ended</a>
+    <% else %>
+      <a href="<%= exam_path(@exam, details_viewed: true) %>" class="btn-primary">Start Exam</a>
+    <% end %>
+  </div>
+</body>
+</html>

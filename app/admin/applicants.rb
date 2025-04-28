@@ -1,6 +1,6 @@
 ActiveAdmin.register Applicant do
   permit_params :serial_no, :category, :location, :programme, :college, :branch, :graduation_year, :name, :batch, :whatsapp_number, :inheritance, :a2j_id, :mail_id, :jlpt_level, :whatsapp, :amount, :balance, :admission_date, :admission_done_by, :balance_reminder, :recipt_no, :payment_mode, :remarks, 
-                payment_histories_attributes: [:jlpt_level, :payable_amount, :paid_amount, :payment_date, :updated_by, :_destroy, :applicant_id]
+                payment_histories_attributes: [:id, :payable_amount, :paid_amount, :payment_date, :updated_by, :_destroy, :applicant_id]
 
   remove_filter :exams
   remove_filter :scores
@@ -25,17 +25,7 @@ ActiveAdmin.register Applicant do
       @applicant = Applicant.find(params[:id])
       @applicant.admission_done_by = current_user.username
 
-      payment_histories_params = params[:applicant][:payment_histories_attributes] || []
-      payment_histories_params.each do |index, attributes|
-        if attributes[:id].blank?
-          @applicant.payment_histories.build(attributes.permit(:payable_amount, :paid_amount, :payment_date, :updated_by).merge(updated_by: current_user.username))
-        else
-          payment_history = @applicant.payment_histories.find(attributes[:id])
-          payment_history.update(attributes.permit(:payable_amount, :paid_amount, :payment_date, :updated_by).merge(updated_by: current_user.username)) unless payment_history.nil?
-        end
-      end
-
-      if @applicant.update(permitted_params[:applicant].except(:payment_histories_attributes))
+      if @applicant.update(permitted_params[:applicant])
         redirect_to admin_applicant_path(@applicant), notice: 'Applicant was successfully updated.'
       else
         render :edit

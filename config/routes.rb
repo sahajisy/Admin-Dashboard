@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   
   resources :exams, only: [:show] do
     member do
-      post :submit
+      get :details  # To view exam details
+      post :submit  # To submit the exam
       #get :result  # To view exam result
     end
     collection do

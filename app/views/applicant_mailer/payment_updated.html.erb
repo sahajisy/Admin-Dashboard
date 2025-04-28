@@ -1,11 +1,11 @@
-<h1>Applicant#payment_updated</h1>
+<h1>Payment Update Notification</h1>
 
 <p>Dear <%= @applicant.name %>,</p>
-<p>Your payment history has been updated. Here are the details:</p>
+<p>We would like to inform you that your payment details have been successfully updated. Below are the updated details:</p>
 <ul>
-  <li>Payable Amount: <%= @payment_history.payable_amount %></li>
-  <li>Paid Amount: <%= @payment_history.paid_amount %></li>
-  <li>Payment Date: <%= @payment_history.payment_date %></li>
-  <li>Balance: <%= @payment_history.balance %></li>
+  <li><strong>Payable Amount:</strong> <%= @payment_history.payable_amount %></li>
+  <li><strong>Paid Amount:</strong> <%= @payment_history.paid_amount %></li>
+  <li><strong>Payment Date:</strong> <%= @payment_history.payment_date %></li>
+  <li><strong>Balance:</strong> <%= @payment_history.balance %></li>
 </ul>
-<p>Thank you!</p>
+<p>Thank you for your prompt attention to this matter!</p>

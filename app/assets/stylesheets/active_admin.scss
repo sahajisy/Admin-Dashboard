@@ -12,6 +12,7 @@
 @import "active_admin/base";
 @import 'wigu/active_admin_theme';
 @import "active_admin_custom.css.scss";
+@import "activeadmin_addons/all";
 
 $skinMainFirstColor: #A5A7AA!default;
 $skinMainSecondColor: #af0101!default;
@@ -21,3 +22,28 @@ $skinBorderWindowColor: #B8BABE!default;
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+.inline-fields {
+  display: flex; /* Use flexbox for layout */
+  gap: 20px; /* Add spacing between fields */
+  align-items: center; /* Align fields vertically */
+}
+
+.inline-fields .input {
+  flex: 1; /* Make fields take equal width */
+  min-width: 200px; /* Optional: Set a minimum width for inputs */
+}
+
+.active_admin .grid-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Create 2 equal-width columns */
+  gap: 20px; /* Add spacing between grid items */
+}
+
+.active_admin .grid-fields .has_many_container {
+  display: contents; /* Ensure nested fields are part of the grid */
+}
+
+.active_admin .grid-fields .input {
+  width: 100%; /* Ensure inputs take full width of their grid cell */
+}

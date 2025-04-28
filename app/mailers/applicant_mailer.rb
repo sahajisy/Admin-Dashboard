@@ -8,6 +8,11 @@ class ApplicantMailer < ApplicationMailer
   def payment_updated(applicant, payment_history)
     @applicant = applicant
     @payment_history = payment_history
-    mail(to: @applicant.mail_id, subject: 'Thank you for your payment.')
+
+    if @applicant.mail_id.present?
+      mail(to: @applicant.mail_id, subject: 'Thank you for your payment.')
+    else
+      Rails.logger.error "Applicant mail_id is missing or invalid for applicant: #{@applicant.id}"
+    end
   end
 end

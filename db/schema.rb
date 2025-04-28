@@ -69,6 +69,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_09_145717) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "exam_questions", force: :cascade do |t|
+    t.bigint "exam_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_exam_questions_on_exam_id"
+    t.index ["question_id"], name: "index_exam_questions_on_question_id"
+  end
+
   create_table "exams", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -151,6 +161,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_09_145717) do
   add_foreign_key "answers", "applicants"
   add_foreign_key "answers", "options"
   add_foreign_key "answers", "questions"
+  add_foreign_key "exam_questions", "exams"
+  add_foreign_key "exam_questions", "questions"
   add_foreign_key "options", "questions"
   add_foreign_key "payment_histories", "applicants"
   add_foreign_key "questions", "exams"

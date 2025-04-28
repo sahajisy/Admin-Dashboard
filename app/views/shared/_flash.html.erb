@@ -1,0 +1,65 @@
+<div class="flash-messages">
+  <% flash.each do |key, message| %>
+    <div class="flash-message <%= key %>">
+      <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <%= message %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .flash-messages {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .flash-message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+  }
+
+  .flash-message.alert {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
+
+  .flash-message.notice {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+  }
+
+  .flash-message.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+  }
+
+  .close-btn:hover {
+    color: #555;
+  }
+</style>
