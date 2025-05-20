@@ -1,0 +1,11 @@
+<%= simple_form_for [:admin, f.object] do |sf| %>
+  <%= sf.simple_fields_for :exam_questions do |eq| %>
+    <div class="exam-question-fields">
+      <%= eq.input :question_id, collection: Question.all.map { |q| [q.content, q.id] }, label: false, placeholder: "Select Question" %>
+      <%= eq.input :order, as: :integer, label: false, placeholder: "Order" %>
+      <% if eq.object.persisted? %>
+        <%= eq.input :_destroy, as: :boolean, label: "Remove" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

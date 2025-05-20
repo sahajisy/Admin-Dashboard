@@ -128,6 +128,7 @@ GEM
     chartkick (5.1.4)
     childprocess (5.1.0)
       logger (~> 1.5)
+    cocoon (1.2.15)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
     crass (1.0.6)
@@ -159,6 +160,8 @@ GEM
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
     ffi (1.17.1-x86_64-linux-musl)
+    font-awesome-sass (6.4.2)
+      sassc (~> 2.0)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
@@ -342,6 +345,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simple_form (5.3.1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -409,9 +415,11 @@ DEPENDENCIES
   cancancan
   capybara
   chartkick
+  cocoon
   debug
   devise
   draper
+  font-awesome-sass (~> 6.4.0)
   groupdate
   importmap-rails
   jbuilder
@@ -424,6 +432,7 @@ DEPENDENCIES
   ransack
   sassc-rails
   selenium-webdriver
+  simple_form
   sprockets-rails
   sqlite3 (>= 1.4)
   stimulus-rails

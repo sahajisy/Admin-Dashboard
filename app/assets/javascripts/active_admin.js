@@ -2,4 +2,4 @@
 //= require chartkick
 //= require Chart.bundle
 //= require activeadmin_addons/all
-
+//= require cocoon

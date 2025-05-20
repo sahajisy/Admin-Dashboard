@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # Add class variable to track current user
+  thread_mattr_accessor :current_user
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   def self.ransackable_attributes(auth_object = nil)
@@ -14,4 +17,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          enum role: { Admin: 0, Editor: 1, Viewer: 2 }
+
+  # Add this method that returns a display name
+  def display_name
+    self.username || self.name || self.email
+  end
 end

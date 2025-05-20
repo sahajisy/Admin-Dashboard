@@ -1,4 +1,5 @@
 ActiveAdmin.register Question do
+  menu false
   permit_params :content, :exam_id, :category,
                 options_attributes: [:id, :content, :correct, :_destroy]
 
@@ -14,9 +15,19 @@ ActiveAdmin.register Question do
 
     f.inputs "Options" do
       # The nested form displays each option input field.
-      f.has_many :options, allow_destroy: true, new_record: true do |o|
-        o.input :content, label: "Option"
-        o.input :correct, as: :boolean, label: "Correct?"
+      f.has_many :options, 
+                 allow_destroy: true, 
+                 new_record: true,
+                 heading: false,
+                 wrapper_html: { class: 'options-container' } do |o|
+        o.input :content, 
+                label: false, 
+                placeholder: "Enter option content",
+                wrapper_html: { class: 'option-content' }
+        o.input :correct, 
+                as: :boolean, 
+                label: "Correct?",
+                wrapper_html: { class: 'option-correct' }
       end
     end
 

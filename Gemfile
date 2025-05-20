@@ -58,6 +58,11 @@ gem 'ransack'
 gem 'active_admin_theme'
 gem 'sassc-rails'
 
+gem 'simple_form'
+
+# Add this line to your Gemfile
+gem 'font-awesome-sass', '~> 6.4.0'  # Use the latest version available
+
 #for mail validation
 group :development do
   gem 'letter_opener'
@@ -70,6 +75,8 @@ gem 'groupdate'
 
 #For more addons
 gem 'activeadmin_addons'
+
+gem 'cocoon'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

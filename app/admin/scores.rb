@@ -9,6 +9,8 @@ ActiveAdmin.register Score do
   #
   # or
   #
+  actions :index, :show
+  
   permit_params do
      permitted = [:exam_id, :applicant_id, :score]
      permitted << :other if params[:action] == 'create' && current_user.admin?

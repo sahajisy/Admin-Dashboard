@@ -1,4 +1,6 @@
 ActiveAdmin.register Exam do
+  config.per_page = 20 # or any number you prefer
+
   permit_params :title, :description, :duration, :required_jlpt_level, :start_time, :end_time,
                 exam_questions_attributes: [:id, :question_id, :order, :_destroy] # Permit nested attributes for exam_questions
 
@@ -6,6 +8,22 @@ ActiveAdmin.register Exam do
 
   # Add a custom filter for exam_questions
   filter :exam_questions_question_id, as: :select, collection: -> { Question.all.map { |q| [q.content, q.id] } }, label: "Questions"
+
+  index do
+    selectable_column
+    id_column
+    column :title
+    column :description
+    column :duration
+    column :created_by
+    column :updated_by
+    column :created_at
+    column :updated_at
+    column :required_jlpt_level
+    column("Start Time") { |exam| exam.start_time.in_time_zone('Asia/Kolkata').strftime("%B %d, %Y %H:%M") }
+    column("End Time") { |exam| exam.end_time.in_time_zone('Asia/Kolkata').strftime("%B %d, %Y %H:%M") }
+    actions
+  end
 
   form do |f|
     f.inputs "Exam Details" do
@@ -17,19 +35,9 @@ ActiveAdmin.register Exam do
       f.input :end_time, as: :date_time_picker
     end
 
-    f.inputs "Select Pre-Created Questions" do
-      f.has_many :exam_questions, allow_destroy: true, new_record: true do |eq|
-        eq.inputs class: "inline-fields" do
-          eq.input :question_id,
-                   as: :select,
-                   collection: Question.all.map { |q| [q.content, q.id] },
-                   label: "Question"
-          eq.input :order,
-                   as: :number,
-                   label: "Order"
-        end
-      end
-    end
+    # Render the simple form partial for exam questions
+    render partial: 'admin/exams/exam_questions_fields', locals: { f: f }
+
 
     f.actions
   end
@@ -39,6 +47,8 @@ ActiveAdmin.register Exam do
       row :title
       row :description
       row :duration
+      row("Start Time") { |exam| exam.start_time.in_time_zone('Asia/Kolkata').strftime("%d-%m-%Y %I:%M %p %Z") }
+      row("End Time") { |exam| exam.end_time.in_time_zone('Asia/Kolkata').strftime("%d-%m-%Y %I:%M %p %Z") }
     end
 
     panel "Questions" do

@@ -81,7 +81,7 @@ ActiveAdmin.setup do |config|
   # method in a before filter of all controller actions to
   # ensure that there is a user with proper rights. You can use
   # CanCanAdapter or make your own. Please refer to documentation.
-  #config.authorization_adapter = ActiveAdmin::PunditAdapter
+  config.authorization_adapter = ActiveAdmin::PunditAdapter
 
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
@@ -169,7 +169,9 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  # config.before_action :do_something_awesome
+  config.before_action do
+    User.current_user = current_user if defined?(current_user) && current_user
+  end
 
   # == Attribute Filters
   #
@@ -264,84 +266,93 @@ ActiveAdmin.setup do |config|
   #     end
   #   end
 
+  config.namespace :admin do |admin|
+    admin.build_menu :default do |menu|
+      menu.add label: "Exams", priority: 2 do |exams_menu|
+        exams_menu.add label: "Questions", url: "/admin/questions"
+        exams_menu.add label: "Options", url: "/admin/options"
+        exams_menu.add label: "Answers", url: "/admin/answers"
+      end
+    end
+  end
+
   # == Download Links
   #
   # You can disable download links on resource listing pages,
   # or customize the formats shown per namespace/globally
   #
   # To disable/customize for the :admin namespace:
-  #
-  #   config.namespace :admin do |admin|
-  #
-  #     # Disable the links entirely
-  #     admin.download_links = false
-  #
-  #     # Only show XML & PDF options
-  #     admin.download_links = [:xml, :pdf]
-  #
-  #     # Enable/disable the links based on block
   #     #   (for example, with cancan)
   #     admin.download_links = proc { can?(:view_download_links) }
   #
-  #   end
-
+  #   end Disable the links entirely
+  #     admin.download_links = false
   # == Pagination
-  #
+  #     # Only show XML & PDF options
   # Pagination is enabled by default for all resources.
   # You can control the default per page count for all resources here.
-  #
-  # config.default_per_page = 30
-  #
+  #     # Enable/disable the links based on block
+  # config.default_per_page = 30ancan)
+  #     admin.download_links = proc { can?(:view_download_links) }
   # You can control the max per page count too.
-  #
+  #   end
   # config.max_per_page = 10_000
-
+  # == Pagination
   # == Filters
-  #
+  # Pagination is enabled by default for all resources.
   # By default the index screen includes a "Filters" sidebar on the right
   # hand side with a filter for each attribute of the registered model.
   # You can enable or disable them for all resources here.
   #
-  # config.filters = true
+  # config.filters = trueax per page count too.
   #
   # By default the filters include associations in a select, which means
   # that every record will be loaded for each association (up
   # to the value of config.maximum_association_filter_arity).
   # You can enabled or disable the inclusion
-  # of those filters by default here.
+  # of those filters by default here.des a "Filters" sidebar on the right
+  # hand side with a filter for each attribute of the registered model.
+  # config.include_default_association_filters = truehere.
   #
-  # config.include_default_association_filters = true
-
   # config.maximum_association_filter_arity = 256 # default value of :unlimited will change to 256 in a future version
   # config.filter_columns_for_large_association = [
-  #    :display_name,
-  #    :full_name,
-  #    :name,
-  #    :username,
-  #    :login,
+  #    :display_name,lters include associations in a select, which means
+  #    :full_name,ord will be loaded for each association (up
+  #    :name,lue of config.maximum_association_filter_arity).
+  #    :username,ed or disable the inclusion
+  #    :login,ilters by default here.
   #    :title,
-  #    :email,
+  #    :email,lude_default_association_filters = true
   #  ]
-  # config.filter_method_for_large_association = '_start'
-
-  # == Head
-  #
+  # config.filter_method_for_large_association = '_start'lt value of :unlimited will change to 256 in a future version
+  # config.filter_columns_for_large_association = [
+  # == Headplay_name,
+  #    :full_name,
   # You can add your own content to the site head like analytics. Make sure
   # you only pass content you trust.
-  #
+  #    :login,
   # config.head = ''.html_safe
-
+  #    :email,
   # == Footer
-  #
+  # config.filter_method_for_large_association = '_start'
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
   config.footer = 'Copyright @ AtoJHirameki 2025'
-
   # == Sorting
-  #
+  # config.head = ''.html_safe
   # By default ActiveAdmin::OrderClause is used for sorting logic
   # You can inherit it with own class and inject it for all resources
+  #
+  # config.order_clause = MyOrderClauserrent Active Admin version. You can
+  # override the content of the footer here.
+  # == Webpacker
+  #onfig.footer = 'Copyright @ AtoJHirameki 2025'
+  # By default, Active Admin uses Sprocket's asset pipeline.
+  # You can switch to using Webpacker here.
+  #
+  # config.use_webpacker = trueerClause is used for sorting logic
+  #You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
 
@@ -351,4 +362,6 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+
+  config.register_javascript 'cocoon.js'
 end

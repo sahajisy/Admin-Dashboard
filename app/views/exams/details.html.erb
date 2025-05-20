@@ -80,6 +80,7 @@
     <p><strong>Start Time:</strong> <%= @exam.start_time.strftime("%I:%M %p") %></p>
     <p><strong>End Time:</strong> <%= @exam.end_time.strftime("%I:%M %p") %></p>
 
+
     <% if Time.current < @exam.start_time %>
       <a href="#" class="btn-primary btn-disabled" onclick="return false;">Exam Not Started</a>
     <% elsif Time.current > @exam.end_time %>

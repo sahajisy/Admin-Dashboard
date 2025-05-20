@@ -13,6 +13,8 @@
 @import 'wigu/active_admin_theme';
 @import "active_admin_custom.css.scss";
 @import "activeadmin_addons/all";
+@import "font-awesome"; // Replaced as per suggestion
+// or add the CDN in your active_admin layout if you prefer
 
 $skinMainFirstColor: #A5A7AA!default;
 $skinMainSecondColor: #af0101!default;
@@ -46,4 +48,96 @@ $skinBorderWindowColor: #B8BABE!default;
 
 .active_admin .grid-fields .input {
   width: 100%; /* Ensure inputs take full width of their grid cell */
+}
+
+/* Remove borders and background from nested has_many fields */
+.has_many_container fieldset.inputs {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+// Style the delete button to be more icon-like
+.has_many_remove {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.has_many_remove a.button {
+  padding: 0.5em;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.has_many_remove a.button:hover .fa-trash {
+  color: #d9534f;
+}
+
+.has_many_remove .fa-trash {
+  color: #777;
+  font-size: 1.2em;
+}
+
+// Define custom styles for ActiveAdmin
+.has_many_container .has_many_remove {
+  float: right;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.custom-remove-button {
+  display: inline-block;
+  position: relative;
+  text-indent: -9999px;
+  width: 20px;
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border: none !important;
+}
+
+.custom-remove-button:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+  content: "\f1f8";  /* trash icon unicode */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  color: #777;
+  font-size: 16px;
+}
+
+.custom-remove-button:hover:before {
+  color: #d9534f;
+}
+
+.options-container {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.option-content {
+  display: inline-block;
+  width: 70%;
+}
+
+.option-correct {
+  display: inline-block;
+  width: 20%;
+  margin-left: 10px;
+}
+
+.has_many_delete {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 10px;
 }

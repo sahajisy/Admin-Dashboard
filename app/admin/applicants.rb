@@ -70,9 +70,11 @@ ActiveAdmin.register Applicant do
     column :recipt_no
     column :payment_mode
     column :remarks
+=begin
     column 'Scores' do |applicant|
       applicant.scores.map { |s| "Exam: #{s.exam.title} -> #{s.score}" }.join("<br>").html_safe
     end
+=end
     actions
   end
 
@@ -175,6 +177,18 @@ ActiveAdmin.register Applicant do
         end
       else
         h4 "No exam answers available."
+      end
+    end
+
+    panel "Exams Attempted with Score" do
+      if applicant.scores.any?
+        table_for applicant.scores.includes(:exam) do
+          column("Exam") { |score| score.exam.title }
+          column("Score") { |score| score.score }
+          column("Attempted At") { |score| score.created_at.strftime("%d-%m-%Y %I:%M %p") }
+        end
+      else
+        h4 "No exams attempted."
       end
     end
   end
