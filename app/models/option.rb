@@ -1,5 +1,7 @@
 class Option < ApplicationRecord
   belongs_to :question
+  has_one_attached :image
+  has_one_attached :audio
   def self.ransackable_associations(auth_object = nil)
     ["question"]
   end

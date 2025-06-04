@@ -2,7 +2,7 @@ class ExamsController < ApplicationController
   LEVEL_ORDER = { "N5" => 1, "N4" => 2, "N3" => 3, "N2" => 4}
   before_action :set_exam, only: [:show, :submit]
   before_action :authenticate_exam_applicant!, only: [:show, :submit]
-  before_action :check_already_taken, only: [:show, :submit]
+  #before_action :check_already_taken, only: [:show, :submit]
   before_action :check_exam_eligibility, only: [:show, :submit]
   before_action :check_exam_timing, only: [:show, :submit]
   before_action :check_exam_access, only: [:show]

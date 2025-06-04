@@ -1,0 +1,16 @@
+<!-- filepath: app/views/admin/applicants/import_csv.html.erb -->
+<h3>Import Applicants from CSV</h3>
+
+<div style="margin-bottom: 16px;">
+  <%= link_to "Download CSV Template", "/templates/applicants_template.csv", class: "button", download: "applicants_template.csv" %>
+</div>
+
+<%= form_tag import_csv_upload_admin_applicants_path, multipart: true, method: :post do %>
+  <div>
+    <label>Select CSV File:</label>
+    <%= file_field_tag :csv_file, accept: '.csv' %>
+  </div>
+  <div>
+    <%= submit_tag "Import", class: "button" %>
+  </div>
+<% end %>

@@ -2,6 +2,8 @@ class Question < ApplicationRecord
   belongs_to :exam
   has_many :options, dependent: :destroy
   has_many :answers, dependent: :destroy
+  has_one_attached :image
+  has_one_attached :audio
 
   accepts_nested_attributes_for :options, allow_destroy: true
   def self.ransackable_attributes(auth_object = nil)

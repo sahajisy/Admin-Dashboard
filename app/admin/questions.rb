@@ -1,13 +1,19 @@
 ActiveAdmin.register Question do
   menu false
-  permit_params :content, :exam_id, :category,
+  permit_params :content, :exam_id, :category, :image, :audio,
                 options_attributes: [:id, :content, :correct, :_destroy]
 
-  form do |f|
+  remove_filter :image_attachment, :image_blob, :audio_attachment, :audio_blob
+
+  form html: { multipart: true } do |f|
     f.inputs "Question Details" do
       f.input :exam, as: :select, collection: Exam.all.pluck(:title, :id)
       f.input :content
-      f.input :category, as: :select, collection: ["Vocabulary", "Grammar", "Reading"], prompt: "Select Category"
+      f.input :category, as: :select, collection: ["Vocabulary", "Grammar", "Reading", "Listening"], prompt: "Select Category"
+      f.input :image, as: :file, hint: f.object.image.attached? ? 
+              image_tag(url_for(f.object.image), height: 100) : "No image attached"
+      f.input :audio, as: :file, hint: f.object.audio.attached? ?
+              audio_tag(url_for(f.object.audio), controls: true) : "No audio attached"
     end
 
     # Pre-build option records until there are 4 in total.
@@ -58,5 +64,10 @@ ActiveAdmin.register Question do
         end.join("<br>").html_safe
       end
     end
+  end
+
+  member_action :preview, method: :get do
+    question = Question.find(params[:id])
+    render partial: 'admin/questions/preview', locals: { question: question }
   end
 end

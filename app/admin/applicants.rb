@@ -229,4 +229,27 @@ ActiveAdmin.register Applicant do
     end
     redirect_to collection_path, notice: "Exam link sent to selected applicants."
   end
+
+  action_item :import_csv, only: :index do
+    link_to 'Import CSV', action: 'import_csv'
+  end
+
+  collection_action :import_csv, method: :get do
+    render 'admin/applicants/import_csv'
+  end
+
+  collection_action :import_csv_upload, method: :post do
+    if params[:csv_file].present?
+      csv_file = params[:csv_file]
+      require 'csv'
+      imported = 0
+      CSV.foreach(csv_file.path, headers: true) do |row|
+        applicant = Applicant.new(row.to_hash)
+        imported += 1 if applicant.save
+      end
+      redirect_to admin_applicants_path, notice: "#{imported} applicants imported."
+    else
+      redirect_to import_csv_admin_applicants_path, alert: "Please upload a CSV file."
+    end
+  end
 end

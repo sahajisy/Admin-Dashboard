@@ -35,10 +35,19 @@ ActiveAdmin.register Exam do
       f.input :end_time, as: :date_time_picker
     end
 
-    # Render the simple form partial for exam questions
-    render partial: 'admin/exams/exam_questions_fields', locals: { f: f }
-
-
+    f.inputs "Select Pre-Created Questions" do
+      f.has_many :exam_questions, allow_destroy: true, new_record: true do |eq|
+        eq.inputs class: "inline-fields" do
+          eq.input :question_id,
+                   as: :select,
+                   collection: Question.all.map { |q| [q.content, q.id] },
+                   label: "Question"
+          eq.input :order,
+                   as: :number,
+                   label: "Order"
+        end
+      end
+    end
     f.actions
   end
 
